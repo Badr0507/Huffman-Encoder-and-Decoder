@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huffman Encoder/Decoder - F23040113</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="bg-circle bg-circle-1"></div>
+        <div class="bg-circle bg-circle-2"></div>
+        <div class="bg-circle bg-circle-3"></div>
+    </div>
+    
+    <!-- Main Container -->
+    <div class="container">
+        
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <svg width="50" height="50" viewBox="0 0 50 50" class="logo">
+                    <defs>
+                        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#667eea"/>
+                            <stop offset="100%" style="stop-color:#764ba2"/>
+                        </linearGradient>
+                    </defs>
+                    <circle cx="25" cy="25" r="24" fill="url(#logoGradient)" opacity="0.2"/>
+                    <path d="M15 25 L25 15 L35 25 L25 35 Z" fill="url(#logoGradient)"/>
+                    <circle cx="25" cy="25" r="4" fill="white"/>
+                </svg>
+            </div>
+            <div class="header-text">
+                <h1 class="main-title">Huffman Encoder/Decoder</h1>
+                <p class="subtitle">Lossless Data Compression Algorithm</p>
+                <div class="student-info">
+                    <div class="student-badge">BADR DYANE</div>
+                    <div class="student-badge">F23040113</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+            <button class="tab-btn active" data-tab="encode" onclick="switchTab('encode')">
+                <span class="tab-icon">🗜️</span>
+                <span class="tab-label">Encode (Compress)</span>
+            </button>
+            <button class="tab-btn" data-tab="decode" onclick="switchTab('decode')">
+                <span class="tab-icon">📂</span>
+                <span class="tab-label">Decode (Decompress)</span>
+            </button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="tab-content-wrapper">
+            
+            <!-- ENCODE TAB -->
+            <div class="tab-content active" id="encode-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>📁 Upload Text File to Compress</h2>
+                        <p class="card-description">Select a .txt file to compress using Huffman coding</p>
+                    </div>
+                    
+                    <div class="upload-zone" id="encodeUploadZone">
+                        <input type="file" id="encodeFileInput" accept=".txt" hidden>
+                        <div class="upload-content" id="encodeUploadContent">
+                            <div class="upload-icon">📄</div>
+                            <h3>Drag & Drop Your File Here</h3>
+                            <p class="upload-hint">or</p>
+                            <button class="btn-upload" onclick="document.getElementById('encodeFileInput').click()">
+                                Browse Files
+                            </button>
+                            <p class="upload-note">Supported: .txt files (max 10 MB)</p>
+                        </div>
+                        
+                        <div class="file-preview" id="encodeFilePreview" style="display: none;">
+                            <div class="file-icon">📄</div>
+                            <div class="file-details">
+                                <h4 id="encodeFileName"></h4>
+                                <p id="encodeFileSize"></p>
+                                <p id="encodeFileChars"></p>
+                            </div>
+                            <button class="btn-remove" onclick="clearEncodeFile()">✕</button>
+                        </div>
+                    </div>
+
+                    <button class="btn-action btn-primary" id="encodeBtn" onclick="performEncode()" disabled>
+                        <span class="btn-spinner" style="display: none;"></span>
+                        <span class="btn-text">🗜️ Compress File</span>
+                    </button>
+                </div>
+
+                <!-- Encode Results -->
+                <div class="card results-card" id="encodeResults" style="display: none;">
+                    <div class="card-header">
+                        <h2>✅ Compression Complete!</h2>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <div class="stat-icon">📄</div>
+                            <div class="stat-info">
+                                <span class="stat-label">Original Size</span>
+                                <span class="stat-value" id="encodeOriginalSize">-</span>
+                            </div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-icon">🗜️</div>
+                            <div class="stat-info">
+                                <span class="stat-label">Compressed Size</span>
+                                <span class="stat-value" id="encodeCompressedSize">-</span>
+                            </div>
+                        </div>
+                        <div class="stat-box highlight">
+                            <div class="stat-icon">📈</div>
+                            <div class="stat-info">
+                                <span class="stat-label">Space Saved</span>
+                                <span class="stat-value" id="encodeRatio">-</span>
+                            </div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-icon">🔤</div>
+                            <div class="stat-info">
+                                <span class="stat-label">Unique Characters</span>
+                                <span class="stat-value" id="encodeUniqueChars">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="actions-row">
+                        <button class="btn-secondary" onclick="viewTable('frequency')">
+                            📊 Frequency Table
+                        </button>
+                        <button class="btn-secondary" onclick="viewTable('codes')">
+                            🔢 Huffman Codes
+                        </button>
+                        <button class="btn-primary" onclick="downloadEncoded()">
+                            💾 Download Compressed File
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DECODE TAB -->
+            <div class="tab-content" id="decode-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>📂 Upload Encoded File to Decompress</h2>
+                        <p class="card-description">Select a .huff file that was previously compressed</p>
+                    </div>
+                    
+                    <div class="upload-zone" id="decodeUploadZone">
+                        <input type="file" id="decodeFileInput" accept=".huff" hidden>
+                        <div class="upload-content" id="decodeUploadContent">
+                            <div class="upload-icon">📦</div>
+                            <h3>Drag & Drop Encoded File Here</h3>
+                            <p class="upload-hint">or</p>
+                            <button class="btn-upload" onclick="document.getElementById('decodeFileInput').click()">
+                                Browse Files
+                            </button>
+                            <p class="upload-note">Supported: .huff files</p>
+                        </div>
+                        
+                        <div class="file-preview" id="decodeFilePreview" style="display: none;">
+                            <div class="file-icon">📦</div>
+                            <div class="file-details">
+                                <h4 id="decodeFileName"></h4>
+                                <p id="decodeFileSize"></p>
+                            </div>
+                            <button class="btn-remove" onclick="clearDecodeFile()">✕</button>
+                        </div>
+                    </div>
+
+                    <button class="btn-action btn-success" id="decodeBtn" onclick="performDecode()" disabled>
+                        <span class="btn-spinner" style="display: none;"></span>
+                        <span class="btn-text">📂 Decompress File</span>
+                    </button>
+                </div>
+
+                <!-- Decode Results -->
+                <div class="card results-card" id="decodeResults" style="display: none;">
+                    <div class="card-header">
+                        <h2>✅ Decompression Complete!</h2>
+                    </div>
+
+                    <div class="verification-box" id="verificationBox">
+                        <div class="verification-icon">✅</div>
+                        <div class="verification-text">
+                            <h3>File Successfully Decompressed!</h3>
+                            <p>The original file has been perfectly reconstructed (lossless compression)</p>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <div class="stat-icon">📦</div>
+                            <div class="stat-info">
+                                <span class="stat-label">Compressed Size</span>
+                                <span class="stat-value" id="decodeCompressedSize">-</span>
+                            </div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-icon">📄</div>
+                            <div class="stat-info">
+                                <span class="stat-label">Decompressed Size</span>
+                                <span class="stat-value" id="decodeOriginalSize">-</span>
+                            </div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-icon">🔤</div>
+                            <div class="stat-info">
+                                <span class="stat-label">Characters Restored</span>
+                                <span class="stat-value" id="decodeCharsRestored">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="actions-row">
+                        <button class="btn-primary" onclick="downloadDecoded()">
+                            💾 Download Original File
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="huffman.js"></script>
+</body>
+</html>
