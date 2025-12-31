@@ -207,6 +207,11 @@ function handleEncodeFile(file) {
         state.encode.content = e.target.result;
         
         displayEncodeFile(file, state.encode.content);
+        
+        // Show file content
+        document.getElementById('encodeContent').textContent = state.encode.content;
+        document.getElementById('encodeContentViewer').style.display = 'block';
+        
         document.getElementById('encodeBtn').disabled = false;
         document.getElementById('encodeResults').style.display = 'none';
     };
@@ -237,6 +242,8 @@ function clearEncodeFile() {
     document.getElementById('encodeFilePreview').style.display = 'none';
     document.getElementById('encodeBtn').disabled = true;
     document.getElementById('encodeResults').style.display = 'none';
+    document.getElementById('encodeContentViewer').style.display = 'none';
+    document.getElementById('compressedContentViewer').style.display = 'none';
 }
 
 // ================================================
@@ -332,6 +339,11 @@ function handleDecodeFile(file) {
             state.decode.content = data;
             
             displayDecodeFile(file);
+            
+            // Show encoded binary content
+            document.getElementById('decodeEncodedContent').textContent = data.encoded;
+            document.getElementById('decodeContentViewer').style.display = 'block';
+            
             document.getElementById('decodeBtn').disabled = false;
             document.getElementById('decodeResults').style.display = 'none';
         } catch (error) {
@@ -360,6 +372,8 @@ function clearDecodeFile() {
     document.getElementById('decodeFilePreview').style.display = 'none';
     document.getElementById('decodeBtn').disabled = true;
     document.getElementById('decodeResults').style.display = 'none';
+    document.getElementById('decodeContentViewer').style.display = 'none';
+    document.getElementById('decompressedContentViewer').style.display = 'none';
 }
 
 // ================================================
@@ -412,6 +426,10 @@ function displayEncodeResults() {
     document.getElementById('encodeRatio').textContent = ratio + '%';
     document.getElementById('encodeUniqueChars').textContent = state.encode.frequencyMap.size;
     
+    // Show compressed binary content
+    document.getElementById('compressedContent').textContent = state.encode.encodedBits;
+    document.getElementById('compressedContentViewer').style.display = 'block';
+    
     document.getElementById('encodeResults').style.display = 'block';
     document.getElementById('encodeResults').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
@@ -454,6 +472,10 @@ function displayDecodeResults() {
     document.getElementById('decodeCompressedSize').textContent = formatBits(compressedBits);
     document.getElementById('decodeOriginalSize').textContent = formatBits(originalBits);
     document.getElementById('decodeCharsRestored').textContent = state.decode.decodedContent.length.toLocaleString();
+    
+    // Show decompressed text content
+    document.getElementById('decompressedContent').textContent = state.decode.decodedContent;
+    document.getElementById('decompressedContentViewer').style.display = 'block';
     
     document.getElementById('decodeResults').style.display = 'block';
     document.getElementById('decodeResults').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -665,6 +687,27 @@ function formatBits(bits) {
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeModal();
 });
+
+// ================================================
+// COPY TO CLIPBOARD
+// ================================================
+
+function copyContent(elementId) {
+    const content = document.getElementById(elementId).textContent;
+    
+    navigator.clipboard.writeText(content).then(() => {
+        showToast('Content copied to clipboard!', 'success');
+    }).catch(() => {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = content;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast('Content copied to clipboard!', 'success');
+    });
+}
 
 // ================================================
 // INITIALIZATION
