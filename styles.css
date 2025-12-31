@@ -1,5 +1,5 @@
 /* ============================================
-   HUFFMAN ENCODER/DECODER - DARK PREMIUM THEME
+   HUFFMAN ENCODER/DECODER
    Student: F23040113
    ============================================ */
 
@@ -712,6 +712,91 @@ body {
     gap: 15px;
     justify-content: center;
     margin-top: 28px;
+}
+
+/* === CONTENT VIEWER === */
+.content-viewer {
+    margin-top: 28px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 24px;
+    animation: slideIn 0.6s ease;
+}
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--glass-border);
+}
+
+.content-header h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.btn-copy {
+    background: var(--glass-bg);
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-copy:hover {
+    background: var(--primary);
+    color: var(--bg-dark);
+    transform: translateY(-2px);
+}
+
+.content-display {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.binary-content {
+    color: var(--primary);
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    word-break: break-all;
+}
+
+.content-display::-webkit-scrollbar {
+    width: 8px;
+}
+
+.content-display::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.content-display::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+}
+
+.content-display::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary);
 }
 
 .actions-row .btn-primary {
