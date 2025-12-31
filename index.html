@@ -168,11 +168,11 @@
                 <div class="card">
                     <div class="card-header">
                         <h2>📂 Upload Encoded File to Decompress</h2>
-                        <p class="card-description">Select a .huff file that was previously compressed</p>
+                        <p class="card-description">Select a .bin file that was previously compressed</p>
                     </div>
                     
                     <div class="upload-zone" id="decodeUploadZone">
-                        <input type="file" id="decodeFileInput" accept=".huff" hidden>
+                        <input type="file" id="decodeFileInput" accept=".bin" hidden>
                         <div class="upload-content" id="decodeUploadContent">
                             <div class="upload-icon">📦</div>
                             <h3>Drag & Drop Encoded File Here</h3>
@@ -180,7 +180,7 @@
                             <button class="btn-upload" onclick="document.getElementById('decodeFileInput').click()">
                                 Browse Files
                             </button>
-                            <p class="upload-note">Supported: .huff files</p>
+                            <p class="upload-note">Supported: .bin files</p>
                         </div>
                         
                         <div class="file-preview" id="decodeFilePreview" style="display: none;">
