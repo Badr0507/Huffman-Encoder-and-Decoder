@@ -36,7 +36,7 @@
                 <h1 class="main-title">Huffman Encoder/Decoder</h1>
                 <p class="subtitle">Lossless Data Compression Algorithm</p>
                 <div class="student-info">
-                    <div class="student-badge">BADR DYANE</div>
+                    <div class="student-badge">Badr Dyane</div>
                     <div class="student-badge">F23040113</div>
                 </div>
             </div>
@@ -92,6 +92,15 @@
                         <span class="btn-spinner" style="display: none;"></span>
                         <span class="btn-text">🗜️ Compress File</span>
                     </button>
+
+                    <!-- Content Viewer -->
+                    <div class="content-viewer" id="encodeContentViewer" style="display: none;">
+                        <div class="content-header">
+                            <h3>📄 File Content</h3>
+                            <button class="btn-copy" onclick="copyContent('encodeContent')" title="Copy to clipboard">📋 Copy</button>
+                        </div>
+                        <pre class="content-display" id="encodeContent"></pre>
+                    </div>
                 </div>
 
                 <!-- Encode Results -->
@@ -142,6 +151,15 @@
                             💾 Download Compressed File
                         </button>
                     </div>
+
+                    <!-- Compressed Content Viewer -->
+                    <div class="content-viewer" id="compressedContentViewer" style="display: none;">
+                        <div class="content-header">
+                            <h3>🗜️ Compressed Data (Binary)</h3>
+                            <button class="btn-copy" onclick="copyContent('compressedContent')" title="Copy to clipboard">📋 Copy</button>
+                        </div>
+                        <pre class="content-display binary-content" id="compressedContent"></pre>
+                    </div>
                 </div>
             </div>
 
@@ -179,6 +197,15 @@
                         <span class="btn-spinner" style="display: none;"></span>
                         <span class="btn-text">📂 Decompress File</span>
                     </button>
+
+                    <!-- Encoded Content Viewer (what was uploaded) -->
+                    <div class="content-viewer" id="decodeContentViewer" style="display: none;">
+                        <div class="content-header">
+                            <h3>📦 Encoded Data (Binary)</h3>
+                            <button class="btn-copy" onclick="copyContent('decodeEncodedContent')" title="Copy to clipboard">📋 Copy</button>
+                        </div>
+                        <pre class="content-display binary-content" id="decodeEncodedContent"></pre>
+                    </div>
                 </div>
 
                 <!-- Decode Results -->
@@ -223,6 +250,15 @@
                         <button class="btn-primary" onclick="downloadDecoded()">
                             💾 Download Original File
                         </button>
+                    </div>
+
+                    <!-- Decompressed Content Viewer -->
+                    <div class="content-viewer" id="decompressedContentViewer" style="display: none;">
+                        <div class="content-header">
+                            <h3>📄 Decompressed Text (Original)</h3>
+                            <button class="btn-copy" onclick="copyContent('decompressedContent')" title="Copy to clipboard">📋 Copy</button>
+                        </div>
+                        <pre class="content-display" id="decompressedContent"></pre>
                     </div>
                 </div>
             </div>
