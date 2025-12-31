@@ -1,5 +1,5 @@
 // ================================================
-// HUFFMAN ENCODER/DECODER - OPTIMIZED & LAG-FREE
+// HUFFMAN ENCODER/DECODER
 // Student: F23040113
 // ================================================
 
@@ -320,8 +320,8 @@ decodeUploadZone.addEventListener('click', (e) => {
 });
 
 function handleDecodeFile(file) {
-    if (!file.name.endsWith('.huff')) {
-        showToast('Please select a .huff file', 'error');
+    if (!file.name.endsWith('.bin')) {
+        showToast('Please select a .bin file', 'error');
         return;
     }
     
@@ -516,8 +516,8 @@ function deserializeTree(data) {
 
 function downloadEncoded() {
     const dataStr = JSON.stringify(state.encode.encodedData, null, 2);
-    const blob = new Blob([dataStr], { type: 'application/json' });
-    const filename = state.encode.file.name.replace('.txt', '') + '.huff';
+    const blob = new Blob([dataStr], { type: 'application/octet-stream' });
+    const filename = state.encode.file.name.replace('.txt', '') + '.bin';
     downloadBlob(blob, filename);
     showToast('Compressed file downloaded!', 'success');
 }
