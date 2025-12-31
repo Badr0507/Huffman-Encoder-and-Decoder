@@ -19,7 +19,7 @@ A modern, feature-rich web application implementing the Huffman coding algorithm
 - 📊 **Compression Statistics** - Real-time compression ratio and space savings
 - 🔢 **Huffman Codes Table** - Visualize generated variable-length binary codes
 - 📈 **Frequency Analysis** - Detailed character frequency distribution
-- 💾 **File Management** - Download compressed (.huff) and decompressed files
+- 💾 **File Management** - Download compressed (.bin) and decompressed files
 
 ### User Experience
 - 🎨 **Modern Dark Theme** - Professional dark UI with neon cyan accents
@@ -56,11 +56,11 @@ Huffman-Encoder-and-Decoder/
 1. Click **"Encode (Compress)"** tab
 2. Upload a `.txt` file
 3. Click **"Compress File"**
-4. View statistics and download `.huff` file
+4. View statistics and download `.bin` file
 
 ### Decoding (Decompress):
 1. Click **"Decode (Decompress)"** tab
-2. Upload a `.huff` file
+2. Upload a `.bin` file
 3. Click **"Decompress File"**
 4. Download restored original file
 
@@ -78,6 +78,7 @@ Huffman-Encoder-and-Decoder/
 - **Typical Compression:** 40-50% for English text
 - **Lossless:** Perfect reconstruction guaranteed
 - **Time Complexity:** O(n log k) where n = text length, k = unique characters
+- **File Format:** Binary (.bin) files containing JSON-encoded tree and data
 
 ## 🔧 Installation
 
